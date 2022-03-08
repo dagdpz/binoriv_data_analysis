@@ -13,7 +13,7 @@ load(filename, 'trial')
 %     'Y:\Data\Linus\20220225\Lin2022-02-25_04.mat', ...
 %     'Y:\Data\Linus\20220303\Lin2022-03-03_04.mat'};
 
-fix_radius = 2.5;
+fix_radius = trial(1).eye.fix.radius;
 
 % extract fix spot positions and color
 trial_info = [];
@@ -48,7 +48,7 @@ axis square
 xlim([-7 7])
 ylim([-7 7])
 
-scatter([-2.5 -2.5 2.5 2.5], [-2.5 2.5 -2.5 2.5], 40, 'k', 'Marker', '*')
+scatter(unqConditions(:, 1), unqConditions(:, 2), 40, 'k', 'Marker', '*')
 
 viscircles(unqConditions(1:2:end, 1:2), repmat(fix_radius, [1 4]), 'Color', 'k', 'LineStyle', '--')
 
