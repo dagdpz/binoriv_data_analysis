@@ -77,7 +77,7 @@ scatter(unqConditions(:, 1), unqConditions(:, 2), 500, 'k', 'Marker', '.')
 %viscircles(unqConditions(1:2:end, 1:2), repmat(fix_radius, [1 4]), 'Color', 'k', 'LineStyle', '--')
 
 % plot circles around the fix spots
-fix_pos = unqConditions(1:2:end, 1:2);
+fix_pos = unqConditions(1:end, 1:2);
 
 for ii = 1:size(fix_pos, 1)
     
