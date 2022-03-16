@@ -1,6 +1,8 @@
 function plotFixationsOnSpots(filename)
-% This function plots 
-
+% This function plots fixations in correct trials of binoriv task
+% 
+% Example use:
+% plotFixationsOnSpots('Y:\Data\Linus\20220301\Lin2022-03-01_02.mat')
 
 % load eye-tracker data file
 load(filename, 'trial')
@@ -48,7 +50,7 @@ axis square
 xlim([-7 7])
 ylim([-7 7])
 
-scatter(unqConditions(:, 1), unqConditions(:, 2), 40, 'k', 'Marker', '*')
+scatter(unqConditions(:, 1), unqConditions(:, 2), 500, 'k', 'Marker', '.')
 
 viscircles(unqConditions(1:2:end, 1:2), repmat(fix_radius, [1 4]), 'Color', 'k', 'LineStyle', '--')
 
