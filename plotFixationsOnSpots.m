@@ -3,6 +3,7 @@ function plotFixationsOnSpots(filename)
 % 
 % Example use:
 % plotFixationsOnSpots('Y:\Data\Linus\20220301\Lin2022-03-01_02.mat')
+% 
 
 % load eye-tracker data file
 load(filename, 'trial')
@@ -51,14 +52,33 @@ xlim([-7 7])
 ylim([-7 7])
 
 scatter(unqConditions(:, 1), unqConditions(:, 2), 500, 'k', 'Marker', '.')
+%viscircles(unqConditions(1:2:end, 1:2), repmat(fix_radius, [1 4]), 'Color', 'k', 'LineStyle', '--')
 
-viscircles(unqConditions(1:2:end, 1:2), repmat(fix_radius, [1 4]), 'Color', 'k', 'LineStyle', '--')
+% plot circles around the fix spots
+fix_pos = unqConditions(1:2:end, 1:2);
+
+for ii = 1:size(fix_pos, 1)
+    
+    circle(fix_pos(ii, 1), fix_pos(ii, 2), fix_radius);
+    
+end
 
 label_numbers = -7:7;
 set(gca, 'XTick', label_numbers, 'YTick', label_numbers)
 set(gca, 'XTickLabel', label_numbers, 'YTickLabel', label_numbers)
 
+title([num2str(length(trial)) ' correct trials'])
+
 xlabel('Visual angle, degrees')
 ylabel('Visual angle, degrees')
 box on
 grid on
+hold off
+
+function h = circle(x,y,r)
+hold on
+th = 0:pi/50:2*pi;
+xunit = r * cos(th) + x;
+yunit = r * sin(th) + y;
+h = plot(xunit, yunit, 'k:', 'LineWidth', 1.5);
+hold off
