@@ -31,7 +31,9 @@ rewarded_trial_ids = [trial.rewarded] == 1;
 trial = trial(rewarded_trial_ids);
 trial_info = trial_info(rewarded_trial_ids, :);
 
-figure,
+figure;
+
+scatter(unqConditions(:, 1), unqConditions(:, 2), 500, 'k', 'Marker', 'o'); hold on;
 
 for trNum = 1:length(trial)
     
@@ -51,7 +53,7 @@ axis square
 xlim([-7 7])
 ylim([-7 7])
 
-scatter(unqConditions(:, 1), unqConditions(:, 2), 500, 'k', 'Marker', '.')
+
 %viscircles(unqConditions(1:2:end, 1:2), repmat(fix_radius, [1 4]), 'Color', 'k', 'LineStyle', '--')
 
 % plot circles around the fix spots
