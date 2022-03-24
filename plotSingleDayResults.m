@@ -7,7 +7,7 @@ function plotSingleDayResults(filename)
 %
 %
 % Example use:
-% plotSingleDayResults(filename)
+% plotSingleDayResults('Y:\Data\Linus\20220322\Lin2022-03-22_05.mat')
 %
 
 close all
@@ -43,6 +43,16 @@ close(1)
 
 % plot performance over trial types
 calculateCorrectTrials(filename)
+
+% add the created plot to the ppt
+saveppt2('ppt', ppt, 'f', 1, 'driver', 'meta')
+
+% close the figure
+close(1)
+
+
+% plot the last points of successful and failed fixations
+ma1_page_thru_trials_simple(filename,0,0,0,1);
 
 % add the created plot to the ppt
 saveppt2('ppt', ppt, 'f', 1, 'driver', 'meta')
