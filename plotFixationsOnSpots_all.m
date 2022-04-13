@@ -13,23 +13,47 @@ function plotFixationsOnSpots_all(filename, only_correct)
 % 
 
 % load eye-tracker data file
-load(filename, 'trial')
+load(filename, 'trial', 'task')
 
-% filenames = {'Y:\Data\Linus\20220204\Lin2022-02-04_11.mat', ...
-%     'Y:\Data\Linus\20220208\Lin2022-02-08_02.mat', ...
-%     'Y:\Data\Linus\20220223\Lin2022-02-23_04.mat', ...
-%     'Y:\Data\Linus\20220224\Lin2022-02-24_02.mat', ...
-%     'Y:\Data\Linus\20220225\Lin2022-02-25_02.mat', ...
-%     'Y:\Data\Linus\20220225\Lin2022-02-25_04.mat', ...
-%     'Y:\Data\Linus\20220303\Lin2022-03-03_04.mat'};
+% check the binoriv task data type (fixation or saccade)
+if strcmp(task.custom_conditions, ...
+        'D:\Sources\MATLAB\monkeypsych_3.0\conditions\Linus\combined_condition_file_Linus_binoriv_direct_saccade_grating')
+    
+    fieldname = 'tar';
+    statenum = 5;
+    
+    time_hold = 'fix_time_hold';
+    time_hold_var = 'fix_time_hold_var';
+    
+elseif strcmp(task.custom_conditions, ...
+        'D:\Sources\MATLAB\monkeypsych_3.0\conditions\Linus\combined_condition_file_Linus_binoriv_fixation_grating')
+    
+    fieldname = 'fix';
+    statenum = 3;
+    
+    time_hold = 'tar_time_hold';
+    time_hold_var = 'tar_time_hold_var';
+    
+elseif strcmp(task.custom_conditions, ...
+        'D:\Sources\MATLAB\monkeypsych_3.0\conditions\Linus\combined_condition_file_Linus')
+    
+    fieldname = 'fix';
+    statenum = 3;
+    
+    time_hold = 'tar_time_hold';
+    time_hold_var = 'tar_time_hold_var';
+    
+else
+    error('Wrong Paradigm, Change Result File')
+end
 
-fix_radius = trial(1).eye.fix.radius;
-fix_size = trial(1).eye.fix.size;
+fix_radius = trial(end).eye.(fieldname).radius;
+fix_size = trial(end).eye.(fieldname).size;
 
 % extract fix spot positions and color
 trial_info = [];
 for ii = 1:length(trial)
-    trial_info(ii, :) = [trial(ii).eye.fix.pos(1:2) trial(ii).eye.fix.color_dim];
+    trial_info(ii, :) = [trial(ii).eye.(fieldname).pos(1:2) trial(ii).eye.(fieldname).color_dim];
 end
 
 unqConditions = unique(trial_info, 'rows');
@@ -55,7 +79,7 @@ hold on
 for trNum = 1:length(rewarded_trials)
     
     hold_state_ids = ...
-        rewarded_trials(trNum).tSample_from_time_start > rewarded_trials(trNum).states_onset(rewarded_trials(trNum).states == 3) & ...
+        rewarded_trials(trNum).tSample_from_time_start > rewarded_trials(trNum).states_onset(rewarded_trials(trNum).states == statenum) & ...
         rewarded_trials(trNum).tSample_from_time_start < rewarded_trials(trNum).states_onset(rewarded_trials(trNum).states == 20);
     
     col = rewarded_trial_info(trNum, 3:5)/max(rewarded_trial_info(trNum, 3:5));
@@ -70,7 +94,7 @@ if only_correct == 0
     for trNum = 1:length(not_rewarded_trials)
         
         hold_state_ids = ...
-            not_rewarded_trials(trNum).tSample_from_time_start > not_rewarded_trials(trNum).states_onset(not_rewarded_trials(trNum).states == 3) & ...
+            not_rewarded_trials(trNum).tSample_from_time_start > not_rewarded_trials(trNum).states_onset(not_rewarded_trials(trNum).states == statenum) & ...
             not_rewarded_trials(trNum).tSample_from_time_start < not_rewarded_trials(trNum).states_onset(not_rewarded_trials(trNum).states == 19);
         
         col = not_rewarded_trial_info(trNum, 3:5)/max(not_rewarded_trial_info(trNum, 3:5)) + 0.7;
