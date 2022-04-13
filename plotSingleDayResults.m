@@ -57,6 +57,20 @@ ma1_page_thru_trials_binoriv(filename,0,0,0,1);
 % add the created plot to the ppt
 saveppt2('ppt', ppt, 'f', 1, 'driver', 'meta')
 
+% add the second created plot to the ppt
+saveppt2('ppt', ppt, 'f', 2, 'driver', 'meta')
+
+% close the figure
+close(1)
+close(2)
+
+
+% plot the monkey's performance
+plotMonkeyPerformance(filename)
+
+% add the created plot to the ppt
+saveppt2('ppt', ppt, 'f', 1, 'driver', 'meta')
+
 % close the figure
 close(1)
 
