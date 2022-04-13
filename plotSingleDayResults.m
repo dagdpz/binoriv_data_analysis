@@ -52,7 +52,7 @@ close(1)
 
 
 % plot the last points of successful and failed fixations
-ma1_page_thru_trials_simple(filename,0,0,0,1);
+ma1_page_thru_trials_binoriv(filename,0,0,0,1);
 
 % add the created plot to the ppt
 saveppt2('ppt', ppt, 'f', 1, 'driver', 'meta')
