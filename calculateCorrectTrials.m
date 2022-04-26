@@ -9,12 +9,31 @@ function calculateCorrectTrials(filename)
 %
 
 % load eye-tracker data file
-load(filename, 'trial')
+load(filename, 'trial', 'task')
+
+% check the binoriv task data type (fixation or saccade)
+if strcmp(task.custom_conditions, ... % saccade task
+        'D:\Sources\MATLAB\monkeypsych_3.0\conditions\Linus\combined_condition_file_Linus_binoriv_direct_saccade_grating')
+    
+    fieldname = 'tar';
+    statenum = [5];
+    
+elseif strcmp(task.custom_conditions, ... % fixation task with grating
+        'D:\Sources\MATLAB\monkeypsych_3.0\conditions\Linus\combined_condition_file_Linus_binoriv_fixation_grating') || ...
+	strcmp(task.custom_conditions, ... % fixation task without grating
+        'D:\Sources\MATLAB\monkeypsych_3.0\conditions\Linus\combined_condition_file_Linus_binoriv_fixation')
+    
+    fieldname = 'fix';
+    statenum = [3];
+    
+else
+    error('Wrong Paradigm, Change Result File')
+end
 
 % extract fix spot positions and color
 trial_info = [];
 for ii = 1:length(trial) 
-    trial_info(ii, :) = [trial(ii).eye.fix.pos(1:2) trial(ii).eye.fix.color_dim]; 
+    trial_info(ii, :) = [trial(ii).eye.(fieldname).pos(1:2) trial(ii).eye.(fieldname).color_dim]; 
 end
 
 [unqConditions, ~, conditionIds] = unique(trial_info, 'rows');
