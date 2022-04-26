@@ -5,7 +5,7 @@ filenames = {'Y:\Data\Linus\20220204\Lin2022-02-04_11.mat', ...
     'Y:\Data\Linus\20220223\Lin2022-02-23_04.mat', ...
     'Y:\Data\Linus\20220224\Lin2022-02-24_02.mat', ...
     'Y:\Data\Linus\20220225\Lin2022-02-25_02.mat', ...
-    'Y:\Data\Linus\20220322\Lin2022-03-22_04.mat'};
+    'Y:\Data\Linus\20220225\Lin2022-02-25_04.mat'};
 
 fix_radius = [3 3 2.5 2.5 2.5 2.5];
 
@@ -23,17 +23,17 @@ for flNum = 6;%1:4
     unqConditions = unique(trial_info, 'rows');
     
     rewarded_trial_ids = [trial.rewarded] == 1;
-    abort_eye_fix_hold_state = cellfun(@(x) strcmp(x, 'ABORT_EYE_FIX_HOLD_STATE'), {trial.abort_code}, 'Uniformoutput', 1);
+    abort_eye_fix_acq_state = cellfun(@(x) strcmp(x, 'ABORT_EYE_FIX_ACQ_STATE'), {trial.abort_code}, 'Uniformoutput', 1);
     
-    trial = trial(abort_eye_fix_hold_state);
-    trial_info = trial_info(abort_eye_fix_hold_state, :);
+    trial = trial(abort_eye_fix_acq_state);
+    trial_info = trial_info(abort_eye_fix_acq_state, :);
     
     figure,
     
     for trNum = 1:length(trial)
         
         hold_state_ids = ...
-            trial(trNum).tSample_from_time_start > trial(trNum).states_onset(trial(trNum).states == 3) & ...
+            trial(trNum).tSample_from_time_start > trial(trNum).states_onset(trial(trNum).states == 2) & ...
             trial(trNum).tSample_from_time_start < trial(trNum).states_onset(trial(trNum).states == 19);
         
         scatter(trial(trNum).x_eye(hold_state_ids), trial(trNum).y_eye(hold_state_ids), 1, ...
