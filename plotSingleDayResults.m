@@ -54,16 +54,15 @@ close(1)
 % plot the last points of successful and failed fixations
 ma1_page_thru_trials_binoriv(filename,0,0,0,1);
 
-% add the created plot to the ppt
-saveppt2('ppt', ppt, 'f', 1, 'driver', 'meta')
+figList = findobj('Type','figure');
 
-% add the second created plot to the ppt
-saveppt2('ppt', ppt, 'f', 2, 'driver', 'meta')
-
-% close the figure
-close(1)
-close(2)
-
+for figNum = 1:length(figList)
+    
+    % add the created plots to the ppt
+    saveppt2('ppt', ppt, 'f', figNum, 'driver', 'meta')
+    close(figNum)
+    
+end
 
 % plot the monkey's performance
 plotMonkeyPerformance(filename)
