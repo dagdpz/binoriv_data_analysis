@@ -1,34 +1,44 @@
-%clear all, close all
+function plotTrialTypes(filename)
+% This function calculates the number of each trial type for the saccade 
+% paradigm in Linus and plots his performance in each one (also works for 
+% Magnus' saccade task).
+%
+% Example use:
+% plotTrialTypes('Y:\Data\Linus\20220503\Lin2022-05-03_03.mat')
+%
 
-% load eye-tracker data file
-% load(filename, 'trial')
-load('Y:\Data\Linus\20220322\Lin2022-03-22_04.mat')
+load(filename)
 
-% extract fix spot positions and color
-trial_info = [];
-for ii = 1:length(trial)
-    trial_info(ii, :) = [trial(ii).eye.fix.pos(1:2) trial(ii).eye.fix.color_dim];
-    trial_pos(ii, :) = trial(ii).eye.fix.pos(1:2);
+noAcqFix = 0;
+abortFix = 0;
+noAcqTar = 0;
+abortTar = 0;
+rewTrial = 0;
+
+for trialNum = 1:length(trial)
+
+    if length(trial(trialNum).states) == 3 & eq(trial(trialNum).states, [1 2 19])
+        noAcqFix = noAcqFix + 1;
+    elseif length(trial(trialNum).states) == 4 & eq(trial(trialNum).states, [1 2 3 19])
+        abortFix = abortFix + 1;
+    elseif length(trial(trialNum).states) == 5 & eq(trial(trialNum).states, [1 2 3 4 19])
+        noAcqTar = noAcqTar + 1;
+    elseif length(trial(trialNum).states) == 6 & eq(trial(trialNum).states, [1 2 3 4 5 19])
+        abortTar = abortTar + 1;
+    elseif length(trial(trialNum).states) == 7 & eq(trial(trialNum).states, [1 2 3 4 5 20 21]) % = correct
+        rewTrial = rewTrial + 1;
+    else
+        disp('Unknown type of trial')
+    end
+
 end
 
-unqConditions = unique(trial_info, 'rows');
-unqPositions = unique(trial_pos, 'rows');
+figure,
+bar([noAcqFix abortFix noAcqTar abortTar rewTrial]/length(trial))
+set(gca, 'XTickLabel', ...
+    {'noAcqFix', 'abortFix', 'noAcqTar', 'abortTar', 'rewTrial'})
+xlabel('Trial type')
+ylabel('% of trials')
+ylim([0 1])
 
-% get trial IDs when fixation wasn't acquired
-abort_eye_fix_acq_state = cellfun(@(x) strcmp(x, 'ABORT_EYE_FIX_ACQ_STATE'), {trial.abort_code}, 'Uniformoutput', 1);
-
-% get trial IDs when fixation was broken
-abort_eye_fix_hold_state = cellfun(@(x) strcmp(x, 'ABORT_EYE_FIX_HOLD_STATE'), {trial.abort_code}, 'Uniformoutput', 1);
-
-% choose trials when fixation wasn't acquired
-not_acquired_fixations = trial(abort_eye_fix_acq_state);
-
-
-
-for currCondition = 1:size(unqConditions, 1)
-    
-    cellfun(@ (x) eq(x, unqPositions(1)), trial_info)
-    eq()
-    
-end
-    
+title(filename(end-19:end-4), 'interpreter', 'none')
