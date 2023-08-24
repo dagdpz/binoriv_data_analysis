@@ -1,16 +1,16 @@
 function plotFixationsOnSpots_all(filename, only_correct)
-% This function plots fixations and fixation radia in specified type of 
+% This function plots fixations and fixation radia in specified type of
 % trials of the binoriv task.
 %
 % Input:
 % + filename - the full path to the needed recording file
 % + only_correct - if zero, plots all the trials irrespective to the
 % outcome, otherwise plots only correct trials
-% 
+%
 % Example use:
 % plotFixationsOnSpots_all('Y:\Data\Linus\20220301\Lin2022-03-01_02.mat',
 % 1) - this command plots correct trials for the specified session of Linus
-% 
+%
 
 % load eye-tracker data file
 load(filename, 'trial', 'task')
@@ -71,7 +71,7 @@ if only_correct == 0
     not_rewarded_trial_info = trial_info(not_rewarded_trial_ids, :);
 end
 
-figure,
+figure('Position',[300 300 600 600]);
 
 scatter(unqConditions(:, 1), unqConditions(:, 2), 500, 'k', 'Marker', '.')
 hold on
@@ -84,13 +84,17 @@ for trNum = 1:length(rewarded_trials)
     
     col = rewarded_trial_info(trNum, 3:5)/max(rewarded_trial_info(trNum, 3:5));
     
-    scatter(rewarded_trials(trNum).x_eye(hold_state_ids), rewarded_trials(trNum).y_eye(hold_state_ids), 1, ...
-        col, 'Marker', '.')
+%     s = scatter(rewarded_trials(trNum).x_eye(hold_state_ids), rewarded_trials(trNum).y_eye(hold_state_ids), 5, ...
+%         col, 'Marker', 'o','MarkerFaceColor',col, 'MarkerEdgeColor',col, 'MarkerFaceAlpha',0.01,'MarkerEdgeAlpha',0);
+    
+    % plot mean
+     s = scatter(mean(rewarded_trials(trNum).x_eye(hold_state_ids)), mean(rewarded_trials(trNum).y_eye(hold_state_ids)), 30, ...
+         col, 'Marker', 'o','MarkerFaceColor',col, 'MarkerEdgeColor',col, 'MarkerFaceAlpha',0.25,'MarkerEdgeAlpha',0);
     
 end
 
 if only_correct == 0
-
+    
     for trNum = 1:length(not_rewarded_trials)
         
         hold_state_ids = ...
@@ -104,7 +108,7 @@ if only_correct == 0
             col, 'Marker', '.')
         
     end
-
+    
 end
 
 axis square
@@ -118,7 +122,7 @@ fix_pos = unqConditions(1:end, 1:2);
 for ii = 1:size(fix_pos, 1)
     
     circle(fix_pos(ii, 1), fix_pos(ii, 2), fix_radius);
-    circle(fix_pos(ii, 1), fix_pos(ii, 2), fix_size/2);
+    % circle(fix_pos(ii, 1), fix_pos(ii, 2), fix_size/2);
     
 end
 
@@ -133,12 +137,12 @@ if only_correct == 0
     
 else
     
-    title([num2str(length(rewarded_trials)) ' correct trials'])
+    title([num2str(length(rewarded_trials)) ' correct trials'],'FontSize',16)
     
 end
 
-xlabel('Visual angle, degrees')
-ylabel('Visual angle, degrees')
+xlabel('Visual angle, degrees','FontSize',16)
+ylabel('Visual angle, degrees','FontSize',16)
 box on
 grid on
 hold off
@@ -148,5 +152,5 @@ hold on
 th = 0:pi/50:2*pi;
 xunit = r * cos(th) + x;
 yunit = r * sin(th) + y;
-h = plot(xunit, yunit, 'k:', 'LineWidth', 3);
+h = plot(xunit, yunit, 'k:', 'LineWidth', 1);
 hold off
