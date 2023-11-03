@@ -1,4 +1,4 @@
-function plotSingleDayResults(filename)
+function binoriv_plotSingleDayResults(filename)
 % This function plots training results for a specified day and file of
 % Linus' training.
 %
@@ -7,7 +7,7 @@ function plotSingleDayResults(filename)
 %
 %
 % Example use:
-% plotSingleDayResults('Y:\Data\Linus\20220322\Lin2022-03-22_05.mat')
+% binoriv_plotSingleDayResults('Y:\Data\Linus\20220322\Lin2022-03-22_05.mat')
 %
 
 close all
@@ -22,7 +22,7 @@ ppt = saveppt2(savename, 'init');
 saveppt2('ppt', ppt, 'f', 0, 't', trainDate, 'driver', 'meta');
 
 % plot fixations in correct trials
-plotFixationsOnSpots_all(filename, 1)
+binoriv_plotFixationsOnSpots_all(filename, 1)
 
 % add the created plot to the ppt
 saveppt2('ppt', ppt, 'f', 1, 'driver', 'meta')
@@ -32,7 +32,7 @@ close(1)
 
 
 % plot fixations in all trials
-plotFixationsOnSpots_all(filename, 0)
+binoriv_plotFixationsOnSpots_all(filename, 0)
 
 % add the created plot to the ppt
 saveppt2('ppt', ppt, 'f', 1, 'driver', 'meta')
@@ -42,7 +42,7 @@ close(1)
 
 
 % plot performance over trial types
-calculateCorrectTrials(filename)
+binoriv_calculateCorrectTrials(filename)
 
 % add the created plot to the ppt
 saveppt2('ppt', ppt, 'f', 1, 'driver', 'meta')
@@ -65,7 +65,7 @@ for figNum = 1:length(figList)
 end
 
 % plot the monkey's performance
-plotMonkeyPerformance(filename)
+binoriv_plotMonkeyPerformance(filename)
 
 % add the created plot to the ppt
 saveppt2('ppt', ppt, 'f', 1, 'driver', 'meta')

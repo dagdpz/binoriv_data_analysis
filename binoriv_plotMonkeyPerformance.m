@@ -1,10 +1,10 @@
-function plotMonkeyPerformance(datafile)
+function binoriv_plotMonkeyPerformance(datafile)
 % This code smoothes the monkey performance over all the trial outcomes 
 % (rewarded, initiated and skipped)data with 'lowess' method and % plots 
 % it.
 %
 % Example use:
-% plotMonkeyPerformance('Y:\Data\Linus\20220413\Lin2022-04-13_03.mat')
+% binoriv_plotMonkeyPerformance('Y:\Data\Linus\20220413\Lin2022-04-13_03.mat')
 %
 
 load(datafile, 'trial')

@@ -1,4 +1,4 @@
-function plotFixationsOnSpots_all(filename, only_correct)
+function binoriv_plotFixationsOnSpots_all(filename, only_correct)
 % This function plots fixations and fixation radia in specified type of
 % trials of the binoriv task.
 %
@@ -8,7 +8,7 @@ function plotFixationsOnSpots_all(filename, only_correct)
 % outcome, otherwise plots only correct trials
 %
 % Example use:
-% plotFixationsOnSpots_all('Y:\Data\Linus\20220301\Lin2022-03-01_02.mat',
+% binoriv_plotFixationsOnSpots_all('Y:\Data\Linus\20220301\Lin2022-03-01_02.mat',
 % 1) - this command plots correct trials for the specified session of Linus
 %
 

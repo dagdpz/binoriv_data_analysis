@@ -1,10 +1,10 @@
-function plotTrialTypes(filename)
+function binoriv_plotTrialTypes(filename)
 % This function calculates the number of each trial type for the saccade 
 % paradigm in Linus and plots his performance in each one (also works for 
 % Magnus' saccade task).
 %
 % Example use:
-% plotTrialTypes('Y:\Data\Linus\20220503\Lin2022-05-03_03.mat')
+% binoriv_plotTrialTypes('Y:\Data\Linus\20220503\Lin2022-05-03_03.mat')
 %
 
 load(filename)

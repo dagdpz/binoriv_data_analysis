@@ -1,11 +1,11 @@
-function calculateCorrectTrials(filename)
+function binoriv_calculateCorrectTrials(filename)
 
 % This script calculates performance for 8 types of trials in the binoriv
 % task for monkeys and plots them into 4 subplots depending on the fixation
 % spot location
 % 
 % Example use:
-% calculateCorrectTrials('Y:\Data\Linus\20220301\Lin2022-03-01_02.mat')
+% binoriv_calculateCorrectTrials('Y:\Data\Linus\20220301\Lin2022-03-01_02.mat')
 %
 
 % load eye-tracker data file
